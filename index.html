@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d18">
+<title>NEXORA — Investment Platform</title>
+<style>
+:root{--bg:#080d18;--panel:#111a2b;--text:#edf3ff;--muted:#8493ad;--blue:#6b9cff;--green:#39d6a0;--red:#ff7185;--border:#26344c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{height:65px;padding:0 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#080d18;z-index:5}
+.logo{font-size:23px;font-weight:900;letter-spacing:3px}.logo span{color:var(--blue)}
+.status{font-size:11px;color:var(--green)}
+.layout{display:flex;min-height:calc(100vh - 65px)}
+nav{width:205px;padding:18px 12px;border-right:1px solid var(--border);flex-shrink:0}
+nav button{width:100%;border:0;background:transparent;color:var(--muted);padding:13px;border-radius:9px;text-align:left;font-size:14px;margin:3px 0;cursor:pointer}
+nav button.active,nav button:hover{background:#1b2a45;color:white}
+main{padding:25px;width:100%;max-width:1450px;margin:auto}
+.page{display:none}.page.active{display:block}
+h1{font-size:27px;margin:0 0 7px}h2{font-size:16px;margin:0 0 17px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:23px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;min-width:0}
+.label{color:var(--muted);font-size:12px}.value{font-size:24px;font-weight:750;margin:12px 0 7px}
+.positive{color:var(--green)}.negative{color:var(--red)}.muted{color:var(--muted)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.section{margin-top:20px}
+table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
+th,td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:500}td{color:#dce6f7}
+.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:#193b38;color:var(--green)}
+.warn{background:#3b2d20;color:#ffc477}
+.action{background:var(--blue);border:0;border-radius:9px;padding:11px 15px;color:#07101f;font-weight:700;cursor:pointer}
+input,select{background:#0b1424;border:1px solid var(--border);border-radius:8px;padding:11px;color:white;width:100%;margin:7px 0 14px}
+.notice{padding:13px;border:1px solid #71572c;background:#2b2418;color:#ffd18b;border-radius:9px;font-size:12px;line-height:1.6;margin:15px 0}
+.chart{height:180px;display:flex;align-items:end;gap:8px;padding-top:12px}
+.bar{flex:1;background:linear-gradient(#6b9cff,#34518a);border-radius:5px 5px 0 0}
+footer{color:var(--muted);font-size:11px;margin-top:25px}
+@media(max-width:800px){.layout{display:block}nav{width:100%;display:flex;overflow-x:auto;padding:7px;border-right:0;border-bottom:1px solid var(--border);position:sticky;top:65px;background:var(--bg);z-index:4}nav button{min-width:max-content;width:auto;padding:10px 12px}main{padding:18px 12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:14px}.value{font-size:20px}}
+</style>
+</head>
+<body>
+<header><div class="logo">NEXORA<span>.</span></div><div class="status">● SYSTEM ONLINE</div></header>
+<div class="layout">
+<nav>
+<button class="active" data-page="dashboard">⌂ Dashboard</button>
+<button data-page="invest">◈ Invest</button>
+<button data-page="trade">↗ Trade</button>
+<button data-page="analytics">▥ Analytics</button>
+<button data-page="risk">◇ Risk</button>
+<button data-page="settings">⚙ Settings</button>
+</nav>
+<main>
+
+<section class="page active" id="dashboard">
+<h1>Dashboard</h1><div class="sub">Centrum zarządzania inwestycjami.</div>
+<div class="grid">
+<div class="card"><div class="label">Wartość portfela</div><div class="value">12 450 zł</div><div class="muted">Dane demo</div></div>
+<div class="card"><div class="label">Wynik całkowity</div><div class="value positive">+8,42%</div><div class="muted">Dane demo</div></div>
+<div class="card"><div class="label">Aktywne pozycje</div><div class="value">3</div><div class="muted">Przykładowe</div></div>
+<div class="card"><div class="label">Gotówka</div><div class="value">2 150 zł</div><div class="muted">Dane demo</div></div>
+</div>
+<div class="card section"><div class="row"><h2>Przegląd rynku</h2><span class="tag warn">TRYB DEMO</span></div>
+<div class="grid">
+<div><div class="label">BTC / USD</div><div class="value">98 420 $</div><div class="positive">+2,31%</div></div>
+<div><div class="label">S&amp;P 500</div><div class="value">6 820</div><div class="positive">+0,64%</div></div>
+<div><div class="label">NASDAQ</div><div class="value">23 110</div><div class="negative">-0,21%</div></div>
+<div><div class="label">WIG20</div><div class="value">3 040</div><div class="positive">+0,42%</div></div>
+</div></div>
+<div class="card section"><h2>Ostatnia aktywność</h2><p class="muted">Brak rzeczywistych transakcji.</p></div>
+</section>
+
+<section class="page" id="invest">
+<h1>NEXORA Invest</h1><div class="sub">Długoterminowe zarządzanie portfelem.</div>
+<div class="grid">
+<div class="card"><div class="label">Wartość portfela</div><div class="value">12 450 zł</div></div>
+<div class="card"><div class="label">Stopa zwrotu</div><div class="value positive">+8,42%</div></div>
+<div class="card"><div class="label">Wpłaty</div><div class="value">11 500 zł</div></div>
+<div class="card"><div class="label">Aktywa</div><div class="value">4</div></div>
+</div>
+<div class="card"><h2>Przykładowy portfel</h2><table>
+<tr><th>Instrument</th><th>Typ</th><th>Udział</th><th>Wartość</th></tr>
+<tr><td>VWCE</td><td>ETF</td><td>55%</td><td>6 847 zł</td></tr>
+<tr><td>BTC</td><td>Crypto</td><td>20%</td><td>2 490 zł</td></tr>
+<tr><td>TSMC</td><td>Akcja</td><td>15%</td><td>1 867 zł</td></tr>
+<tr><td>Gotówka</td><td>Cash</td><td>10%</td><td>1 246 zł</td></tr>
+</table></div>
+</section>
+
+<section class="page" id="trade">
+<h1>NEXORA Trade</h1><div class="sub">Analiza aktywnych okazji rynkowych.</div>
+<div class="notice">Tryb demonstracyjny. Poniższe sygnały są przykładowe, nie są aktualnymi rekomendacjami ani danymi rynkowymi.</div>
+<div class="card"><div class="row"><h2>Skaner rynku</h2><span class="tag warn">DEMO</span></div>
+<table>
+<tr><th>Instrument</th><th>Rynek</th><th>Sygnał</th><th>Ocena</th></tr>
+<tr><td>BTC/USD</td><td>Crypto</td><td class="positive">LONG</td><td>8/10</td></tr>
+<tr><td>NVDA</td><td>USA</td><td class="positive">LONG</td><td>7/10</td></tr>
+<tr><td>PKO.WA</td><td>Polska</td><td>WAIT</td><td>5/10</td></tr>
+<tr><td>ETH/USD</td><td>Crypto</td><td class="negative">SHORT</td><td>4/10</td></tr>
+</table></div>
+<div class="card section"><h2>Kalkulator wielkości pozycji</h2>
+<label class="label">Kapitał (PLN)</label><input id="capital" type="number" value="2000">
+<label class="label">Ryzyko (%)</label><input id="riskpct" type="number" value="0.5" step="0.1">
+<label class="label">Stop loss (%)</label><input id="stop" type="number" value="2" step="0.1">
+<button class="action" onclick="calculate()">Oblicz pozycję</button>
+<div class="value" id="result">—</div><div class="muted" id="riskresult">Wprowadź parametry.</div>
+</div>
+</section>
+
+<section class="page" id="analytics">
+<h1>NEXORA Analytics</h1><div class="sub">Statystyki i wyniki portfela.</div>
+<div class="grid">
+<div class="card"><div class="label">Wynik całkowity</div><div class="value positive">+8,42%</div></div>
+<div class="card"><div class="label">Skuteczność</div><div class="value">—</div></div>
+<div class="card"><div class="label">Zysk / strata</div><div class="value">—</div></div>
+<div class="card"><div class="label">Max drawdown</div><div class="value">—</div></div>
+</div>
+<div class="card"><h2>Historia wartości portfela</h2><div class="chart">
+<div class="bar" style="height:35%"></div><div class="bar" style="height:43%"></div><div class="bar" style="height:40%"></div><div class="bar" style="height:55%"></div><div class="bar" style="height:49%"></div><div class="bar" style="height:68%"></div><div class="bar" style="height:63%"></div><div class="bar" style="height:80%"></div><div class="bar" style="height:74%"></div><div class="bar" style="height:95%"></div>
+</div><p class="muted">Wykres poglądowy, nie przedstawia rzeczywistych notowań.</p></div>
+</section>
+
+<section class="page" id="risk">
+<h1>NEXORA Risk</h1><div class="sub">Zarządzanie ekspozycją i ryzykiem.</div>
+<div class="grid">
+<div class="card"><div class="label">Ryzyko / transakcję</div><div class="value">0,5%</div></div>
+<div class="card"><div class="label">Limit pozycji</div><div class="value">3</div></div>
+<div class="card"><div class="label">Maksymalna ekspozycja</div><div class="value">75%</div></div>
+<div class="card"><div class="label">Kontrola</div><div class="value positive">Aktywna</div></div>
+</div>
+<div class="card"><h2>Zasady zarządzania ryzykiem</h2>
+<p>• Ustal stop loss przed wejściem w pozycję.</p>
+<p>• Nie zwiększaj ryzyka, aby odrabiać straty.</p>
+<p>• Kontroluj łączną ekspozycję portfela.</p>
+<p>• Uwzględniaj prowizje i poślizg cenowy.</p>
+</div>
+</section>
+
+<section class="page" id="settings">
+<h1>Settings</h1><div class="sub">Konfiguracja platformy.</div>
+<div class="card"><h2>Ustawienia strategii</h2>
+<label class="label">Styl tradingu</label><select><option>Balanced</option><option>Conservative</option><option>Aggressive</option></select>
+<label class="label">Preferowany rynek</label><select><option>Wszystkie rynki</option><option>Kryptowaluty</option><option>Akcje</option><option>ETF</option></select>
+<label class="label">Waluta portfela</label><select><option>PLN</option><option>USD</option><option>EUR</option></select>
+<div class="notice">To wersja startowa. Nie przechowuje jeszcze ustawień ani kluczy API. Integracje dodamy w kolejnych etapach.</div>
+</div>
+</section>
+
+<footer>NEXORA © 2026 · Personal Investment &amp; Trading Platform · Demo</footer>
+</main>
+</div>
+<script>
+document.querySelectorAll("nav button").forEach(button=>{
+button.addEventListener("click",()=>{
+document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+button.classList.add("active");
+document.getElementById(button.dataset.page).classList.add("active");
+});
+});
+function calculate(){
+const capital=Number(document.getElementById("capital").value);
+const risk=Number(document.getElementById("riskpct").value);
+const stop=Number(document.getElementById("stop").value);
+if(capital<=0||risk<=0||stop<=0){
+document.getElementById("result").textContent="Sprawdź dane";
+document.getElementById("riskresult").textContent="Wartości muszą być większe od zera.";
+return;
+}
+const riskAmount=capital*risk/100;
+const position=riskAmount/(stop/100);
+document.getElementById("result").textContent=position.toFixed(2)+" zł";
+document.getElementById("riskresult").textContent="Potencjalna strata przy SL: "+riskAmount.toFixed(2)+" zł.";
+}
+</script>
+</body>
+</html>
