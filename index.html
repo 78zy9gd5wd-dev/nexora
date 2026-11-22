@@ -238,19 +238,5 @@ function invSave() {
   invRender();
 }
 
-function invRender() {
-  const total = inv.reduce((s, a) => s + a.q * a.p, 0);
-  const cost = inv.reduce((s, a) => s + a.q * a.b, 0);
-  const profit = total - cost;
-
-  document.getElementById("inv-total").textContent = pln(total);
-  document.getElementById("inv-cost").textContent = pln(cost);
-  document.getElementById("inv-profit").textContent =
-    (profit >= 0 ? "+" : "") + pln(profit);
-  document.getElementById("inv-percent").textContent =
-    (cost ? (profit / cost * 100).toFixed(2) : "0.00") + "%";
-document.getElementById("inv-count").textContent = inv.length;
-}
-</script>
 </body>
 </html>
