@@ -72,23 +72,88 @@ footer{color:var(--muted);font-size:11px;margin-top:25px}
 </section>
 
 <section class="page" id="invest">
-<h1>NEXORA Invest</h1><div class="sub">Długoterminowe zarządzanie portfelem.</div>
-<div class="grid">
-<div class="card"><div class="label">Wartość portfela</div><div class="value">12 450 zł</div></div>
-<div class="card"><div class="label">Stopa zwrotu</div><div class="value positive">+8,42%</div></div>
-<div class="card"><div class="label">Wpłaty</div><div class="value">11 500 zł</div></div>
-<div class="card"><div class="label">Aktywa</div><div class="value">4</div></div>
-</div>
-<div class="card"><h2>Przykładowy portfel</h2><table>
-<tr><th>Instrument</th><th>Typ</th><th>Udział</th><th>Wartość</th></tr>
-<tr><td>VWCE</td><td>ETF</td><td>55%</td><td>6 847 zł</td></tr>
-<tr><td>BTC</td><td>Crypto</td><td>20%</td><td>2 490 zł</td></tr>
-<tr><td>TSMC</td><td>Akcja</td><td>15%</td><td>1 867 zł</td></tr>
-<tr><td>Gotówka</td><td>Cash</td><td>10%</td><td>1 246 zł</td></tr>
-</table></div>
-</section>
+<h1>NEXORA Invest</h1>
+<div class="sub">Długoterminowe zarządzanie portfelem inwestycyjnym.</div>
 
-<section class="page" id="trade">
+<div class="grid">
+  <div class="card">
+    <div class="label">Wartość portfela</div>
+    <div class="value" id="inv-total">0,00 zł</div>
+  </div>
+  <div class="card">
+    <div class="label">Zysk / strata</div>
+    <div class="value" id="inv-profit">0,00 zł</div>
+    <div class="muted" id="inv-percent">0,00%</div>
+  </div>
+  <div class="card">
+    <div class="label">Zainwestowany kapitał</div>
+    <div class="value" id="inv-cost">0,00 zł</div>
+  </div>
+  <div class="card">
+    <div class="label">Liczba aktywów</div>
+    <div class="value" id="inv-count">0</div>
+  </div>
+</div>
+
+<div class="card section">
+  <h2>Dodaj aktywo do portfela</h2>
+  <form id="inv-form">
+    <label class="label">Ticker lub nazwa</label>
+    <input id="inv-name" placeholder="Np. VWCE, BTC, PKO" required maxlength="30">
+
+    <label class="label">Rodzaj aktywa</label>
+    <select id="inv-type">
+      <option>ETF</option>
+      <option>Akcja</option>
+      <option>Kryptowaluta</option>
+      <option>Gotówka</option>
+      <option>Inne</option>
+    </select>
+
+    <label class="label">Liczba jednostek</label>
+    <input id="inv-units" type="number" min="0.00000001" step="any" placeholder="Np. 2.5" required>
+
+    <label class="label">Średnia cena zakupu (PLN)</label>
+    <input id="inv-buy" type="number" min="0" step="any" placeholder="Np. 120" required>
+
+    <label class="label">Aktualna cena (PLN)</label>
+    <input id="inv-current" type="number" min="0" step="any" placeholder="Np. 135" required>
+
+    <button class="action" type="submit">Dodaj do portfela</button>
+  </form>
+  <p class="muted">Ceny wpisujesz ręcznie. Notowania na żywo dodamy w kolejnym etapie.</p>
+</div>
+
+<div class="card section">
+  <div class="row">
+    <h2>Moje aktywa</h2>
+    <button class="action" type="button" id="inv-export">Eksport CSV</button>
+  </div>
+  <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Aktywo</th>
+          <th>Typ</th>
+          <th>Jednostki</th>
+          <th>Kupno</th>
+          <th>Aktualna cena</th>
+          <th>Wartość</th>
+          <th>Wynik</th>
+          <th>Akcje</th>
+        </tr>
+      </thead>
+      <tbody id="inv-rows">
+        <tr><td colspan="8">Brak aktywów.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="notice">
+Portfel zapisuje się lokalnie w przeglądarce na tym urządzeniu. Nie jest jeszcze synchronizowany z chmurą ani połączony z XTB.
+</div>
+</section>
 <h1>NEXORA Trade</h1><div class="sub">Analiza aktywnych okazji rynkowych.</div>
 <div class="notice">Tryb demonstracyjny. Poniższe sygnały są przykładowe, nie są aktualnymi rekomendacjami ani danymi rynkowymi.</div>
 <div class="card"><div class="row"><h2>Skaner rynku</h2><span class="tag warn">DEMO</span></div>
