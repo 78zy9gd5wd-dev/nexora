@@ -308,6 +308,53 @@ function invRender() {
 
   document.getElementById("dash-cost").textContent = pln(cost);
 
+const historyKey = "nexora_portfolio_history_v1";
+const today = new Date();
+const dateKey = [
+  today.getFullYear(),
+  String(today.getMonth() + 1).padStart(2, "0"),
+  String(today.getDate()).padStart(2, "0")
+].join("-");
+
+let history = JSON.parse(localStorage.getItem(historyKey) || "[]");
+const existing = history.findIndex(item => item.date === dateKey);
+
+if (existing >= 0) {
+  history[existing].value = total;
+} else {
+  history.push({ date: dateKey, value: total });
+}
+
+history = history.slice(-30);
+localStorage.setItem(historyKey, JSON.stringify(history));
+
+const chartBox = document.getElementById("portfolio-chart");
+
+if (chartBox) {
+  chartBox.replaceChildren();
+  chartBox.style.display = "block";
+
+  const chart = document.createElement("div");
+  chart.style.cssText = "height:180px;display:flex;align-items:end;gap:6px;padding-top:12px";
+
+  const maxValue = Math.max(...history.map(item => item.value), 1);
+
+  history.forEach(item => {
+    const bar = document.createElement("div");
+    bar.className = "bar";
+    bar.style.height = Math.max(8, item.value / maxValue * 100) + "%";
+    bar.title = item.date + ": " + pln(item.value);
+    bar.style.flex = "1";
+    chart.appendChild(bar);
+  });
+
+  chartBox.appendChild(chart);
+
+  const label = document.createElement("p");
+  label.className = "muted";
+  label.textContent = "Historia z ostatnich " + history.length + " dni. Wartość zapisana dzisiaj: " + pln(total);
+  chartBox.appendChild(label);
+}
 const rows = document.getElementById("inv-rows");
 
 
