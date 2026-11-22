@@ -276,6 +276,19 @@ function invRender() {
     (cost ? (profit / cost * 100).toFixed(2) : "0.00") + "%";
 
   document.getElementById("inv-count").textContent = inv.length;
+  
+  document.getElementById("dash-total").textContent = pln(total);
+
+  document.getElementById("dash-profit").textContent =
+    (profit >= 0 ? "+" : "") + pln(profit);
+
+  document.getElementById("dash-percent").textContent =
+    (cost ? (profit / cost * 100).toFixed(2) : "0.00") + "%";
+
+  document.getElementById("dash-count").textContent = inv.length;
+
+  document.getElementById("dash-cost").textContent = pln(cost);
+
 
   const rows = document.getElementById("inv-rows");
 
