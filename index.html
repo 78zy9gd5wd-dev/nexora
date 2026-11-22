@@ -237,6 +237,222 @@ function invSave() {
   localStorage.setItem(invKey, JSON.stringify(inv));
   invRender();
 }
+function invRender() {
 
+  const total = inv.reduce((s, a) => s + a.q * a.p, 0);
+
+  const cost = inv.reduce((s, a) => s + a.q * a.b, 0);
+
+  const profit = total - cost;
+
+  document.getElementById("inv-total").textContent = pln(total);
+
+  document.getElementById("inv-cost").textContent = pln(cost);
+
+  document.getElementById("inv-profit").textContent =
+
+    (profit >= 0 ? "+" : "") + pln(profit);
+
+  document.getElementById("inv-percent").textContent =
+
+    (cost ? (profit / cost * 100).toFixed(2) : "0.00") + "%";
+
+  document.getElementById("inv-count").textContent = inv.length;
+
+  const rows = document.getElementById("inv-rows");
+
+  rows.replaceChildren();
+
+  if (!inv.length) {
+
+    const tr = document.createElement("tr");
+
+    const td = document.createElement("td");
+
+    td.colSpan = 8;
+
+    td.textContent = "Brak aktywów.";
+
+    tr.appendChild(td);
+
+    rows.appendChild(tr);
+
+    return;
+
+  }
+
+  inv.forEach((a, i) => {
+
+    const tr = document.createElement("tr");
+
+    const values = [
+
+      a.n, a.t, a.q, pln(a.b), pln(a.p),
+
+      pln(a.q * a.p), pln((a.p - a.b) * a.q)
+
+    ];
+
+    values.forEach(value => {
+
+      const td = document.createElement("td");
+
+      td.textContent = value;
+
+      tr.appendChild(td);
+
+    });
+
+    const actions = document.createElement("td");
+
+    const edit = document.createElement("button");
+
+    edit.type = "button";
+
+    edit.className = "action";
+
+    edit.textContent = "Cena";
+
+    edit.dataset.edit = i;
+
+    const del = document.createElement("button");
+
+    del.type = "button";
+
+    del.className = "action";
+
+    del.textContent = "Usuń";
+
+    del.dataset.delete = i;
+
+    actions.append(edit, del);
+
+    tr.appendChild(actions);
+
+    rows.appendChild(tr);
+
+  });
+
+}
+
+document.getElementById("inv-form").addEventListener("submit", event => {
+
+  event.preventDefault();
+
+  const name = document.getElementById("inv-name").value.trim();
+
+  const type = document.getElementById("inv-type").value;
+
+  const units = Number(document.getElementById("inv-units").value);
+
+  const buy = Number(document.getElementById("inv-buy").value);
+
+  const current = Number(document.getElementById("inv-current").value);
+
+  if (!name || !Number.isFinite(units) || units <= 0 ||
+
+      !Number.isFinite(buy) || buy < 0 ||
+
+      !Number.isFinite(current) || current < 0) {
+
+    alert("Sprawdź wpisane dane.");
+
+    return;
+
+  }
+
+  inv.push({ n: name, t: type, q: units, b: buy, p: current });
+
+  invSave();
+
+  event.target.reset();
+
+});
+
+document.getElementById("inv-rows").addEventListener("click", event => {
+
+  const editIndex = event.target.dataset.edit;
+
+  const deleteIndex = event.target.dataset.delete;
+
+  if (editIndex !== undefined) {
+
+    const asset = inv[Number(editIndex)];
+
+    const nextPrice = prompt("Podaj nową aktualną cenę w PLN:", asset.p);
+
+    if (nextPrice === null) return;
+
+    const price = Number(nextPrice.replace(",", "."));
+
+    if (!Number.isFinite(price) || price < 0) {
+
+      alert("Wpisz prawidłową cenę.");
+
+      return;
+
+    }
+
+    asset.p = price;
+
+    invSave();
+
+  }
+
+  if (deleteIndex !== undefined) {
+
+    const index = Number(deleteIndex);
+
+    if (confirm("Usunąć " + inv[index].n + " z portfela?")) {
+
+      inv.splice(index, 1);
+
+      invSave();
+
+    }
+
+  }
+
+});
+
+document.getElementById("inv-export").addEventListener("click", () => {
+
+  const header = [
+
+    "Aktywo", "Typ", "Jednostki", "Cena zakupu PLN",
+
+    "Aktualna cena PLN", "Wartość PLN", "Wynik PLN"
+
+  ];
+
+  const lines = [header, ...inv.map(a => [
+
+    a.n, a.t, a.q, a.b, a.p, a.q * a.p, (a.p - a.b) * a.q
+
+  ])];
+
+  const csv = "\uFEFF" + lines.map(row =>
+
+    row.map(value => '"' + String(value).replace(/"/g, '""') + '"').join(";")
+
+  ).join("\r\n");
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+
+  link.href = url;
+
+  link.download = "nexora-portfel.csv";
+
+  link.click();
+
+  URL.revokeObjectURL(url);
+
+});
+
+invRender();
 </body>
 </html>
