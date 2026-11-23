@@ -98,17 +98,7 @@ footer{color:var(--muted);font-size:11px;margin-top:25px}
 
   document.getElementById("dash-total").textContent = pln(total);
 
-  document.getElementById("dash-profit").textContent =
-    (profit >= 0 ? "+" : "") + pln(profit);
 
-  document.getElementById("dash-percent").textContent =
-    (cost ? (profit / cost * 100).toFixed(2) : "0.00") + "%";
-
-  document.getElementById("dash-count").textContent = inv.length;
-
-  document.getElementById("dash-cost").textContent = pln(cost);
-
-<section class="page" id="invest">
 <h1>NEXORA Invest</h1>
 <div class="sub">Długoterminowe zarządzanie portfelem inwestycyjnym.</div>
 
