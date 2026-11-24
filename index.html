@@ -507,6 +507,10 @@ if (!name || !Number.isFinite(units) || units <= 0 ||
     !Number.isFinite(buy) || buy <= 0 ||
     !Number.isFinite(current) || current <= 0) {
 
+    if (inv.some(a => a.n.toUpperCase() === name.toUpperCase())) {
+      alert("To aktywo jest już w portfelu.");
+      return;
+    }
     alert("Sprawdź wpisane dane.");
 
     return;
