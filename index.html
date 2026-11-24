@@ -503,18 +503,16 @@ document.getElementById("inv-form").addEventListener("submit", event => {
 
   const buy = Number(document.getElementById("inv-buy").value);
   const current = Number(document.getElementById("inv-current").value);
-if (!name || !Number.isFinite(units) || units <= 0 ||
-    !Number.isFinite(buy) || buy <= 0 ||
-    !Number.isFinite(current) || current <= 0) {
-
-    if (inv.some(a => a.n.toUpperCase() === name.toUpperCase())) {
-      alert("To aktywo jest już w portfelu.");
-      return;
-    }
+  if (!name || !Number.isFinite(units) || units <= 0 ||
+      !Number.isFinite(buy) || buy <= 0 ||
+      !Number.isFinite(current) || current <= 0) {
     alert("Sprawdź wpisane dane.");
-
     return;
+  }
 
+  if (inv.some(a => a.n.toUpperCase() === name.toUpperCase())) {
+    alert("To aktywo jest już w portfelu.");
+    return;
   }
 
   inv.push({ n: name, t: type, q: units, b: buy, p: current });
