@@ -391,7 +391,11 @@ if (existing >= 0) {
 }
 
 history = history.slice(-30);
-localStorage.setItem(historyKey, JSON.stringify(history));
+try {
+  localStorage.setItem(historyKey, JSON.stringify(history));
+} catch (error) {
+  console.warn("Nie udało się zapisać historii portfela.", error);
+}
 
 const chartBox = document.getElementById("portfolio-chart");
 
