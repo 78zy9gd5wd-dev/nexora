@@ -312,7 +312,13 @@ function calculate(){
 // NEXORA INVEST
 
 const invKey = "nexora_invest_assets_v1";
-let inv = JSON.parse(localStorage.getItem(invKey) || "[]");
+let inv = [];
+try {
+  const saved = JSON.parse(localStorage.getItem(invKey) || "[]");
+  inv = Array.isArray(saved) ? saved : [];
+} catch (error) {
+  inv = [];
+}
 
 const pln = n => Number(n).toLocaleString("pl-PL", {
   minimumFractionDigits: 2,
