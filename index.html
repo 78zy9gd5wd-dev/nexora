@@ -325,9 +325,12 @@ const pln = n => Number(n).toLocaleString("pl-PL", {
   maximumFractionDigits: 2
 }) + " zł";
 
-function invSave() {
-  localStorage.setItem(invKey, JSON.stringify(inv));
-  invRender();
+let inv = [];
+try {
+  const saved = JSON.parse(localStorage.getItem(invKey) || "[]");
+  inv = Array.isArray(saved) ? saved : [];
+} catch (error) {
+  inv = [];
 }
 function invRender() {
 
