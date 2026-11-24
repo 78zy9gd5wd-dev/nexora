@@ -375,7 +375,13 @@ const dateKey = [
   String(today.getDate()).padStart(2, "0")
 ].join("-");
 
-let history = JSON.parse(localStorage.getItem(historyKey) || "[]");
+let history = [];
+try {
+  const savedHistory = JSON.parse(localStorage.getItem(historyKey) || "[]");
+  history = Array.isArray(savedHistory) ? savedHistory : [];
+} catch (error) {
+  history = [];
+}
 const existing = history.findIndex(item => item.date === dateKey);
 
 if (existing >= 0) {
