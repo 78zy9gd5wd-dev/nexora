@@ -642,9 +642,12 @@ document.getElementById("inv-export").addEventListener("click", () => {
 
   link.download = "nexora-portfel.csv";
 
-  link.click();
+  
+document.body.appendChild(link);
+link.click();
+link.remove();
+setTimeout(() => URL.revokeObjectURL(url), 2000);
 
-  URL.revokeObjectURL(url);
 
 });
 
