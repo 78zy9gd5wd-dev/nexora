@@ -533,51 +533,82 @@ document.getElementById("inv-form").addEventListener("submit", event => {
 
 });
 
+
 document.getElementById("inv-rows").addEventListener("click", event => {
+  const editButton = event.target.closest("button[data-edit]");
+  const saveButton = event.target.closest("button[data-save-edit]");
+  const cancelButton = event.target.closest("button[data-cancel-edit]");
+  const deleteButton = event.target.closest("button[data-delete]");
 
-  const editIndex = event.target.dataset.edit;
+  if (editButton) {
+    const index = Number(editButton.dataset.edit);
+    const asset = inv[index];
+    if (!asset) return;
 
-  const deleteIndex = event.target.dataset.delete;
+    const cell = editButton.closest("tr").children[4];
+    cell.replaceChildren();
 
-  if (editIndex !== undefined) {
+    const input = document.createElement("input");
+    input.type = "number";
+    input.min = "0";
+    input.step = "any";
+    input.value = asset.p;
+    input.setAttribute("aria-label", "Nowa aktualna cena");
 
-    const asset = inv[Number(editIndex)];
+    const save = document.createElement("button");
+    save.type = "button";
+    save.className = "action";
+    save.textContent = "Zapisz";
+    save.dataset.saveEdit = index;
 
-    const nextPrice = prompt("Podaj nową aktualną cenę w PLN:", asset.p);
+    const cancel = document.createElement("button");
+    cancel.type = "button";
+    cancel.className = "action";
+    cancel.textContent = "Anuluj";
+    cancel.dataset.cancelEdit = index;
 
-    if (nextPrice === null) return;
+    cell.append(input, save, cancel);
+    input.focus();
+    return;
+  }
 
-    const price = Number(nextPrice.replace(",", "."));
+  if (saveButton) {
+    const index = Number(saveButton.dataset.saveEdit);
+    const asset = inv[index];
+    const input = saveButton.closest("td").querySelector("input");
+
+    if (!asset || !input || input.value.trim() === "") {
+      alert("Wpisz prawidłową cenę.");
+      return;
+    }
+
+    const price = Number(input.value);
 
     if (!Number.isFinite(price) || price < 0) {
-
       alert("Wpisz prawidłową cenę.");
-
       return;
-
     }
 
     asset.p = price;
-
     invSave();
-
+    return;
   }
 
-  if (deleteIndex !== undefined) {
+  if (cancelButton) {
+    invRender();
+    return;
+  }
 
-    const index = Number(deleteIndex);
+  if (deleteButton) {
+    const index = Number(deleteButton.dataset.delete);
 
-    if (confirm("Usunąć " + inv[index].n + " z portfela?")) {
-
+    if (inv[index] && confirm("Usunąć " + inv[index].n + " z portfela?")) {
       inv.splice(index, 1);
-
       invSave();
-
     }
-
   }
-
 });
+
 
 document.getElementById("inv-export").addEventListener("click", () => {
 
