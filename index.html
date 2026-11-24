@@ -325,12 +325,13 @@ const pln = n => Number(n).toLocaleString("pl-PL", {
   maximumFractionDigits: 2
 }) + " zł";
 
-let inv = [];
-try {
-  const saved = JSON.parse(localStorage.getItem(invKey) || "[]");
-  inv = Array.isArray(saved) ? saved : [];
-} catch (error) {
-  inv = [];
+function invSave() {
+  try {
+    localStorage.setItem(invKey, JSON.stringify(inv));
+    invRender();
+  } catch (error) {
+    alert("Nie udało się zapisać portfela. Sprawdź pamięć przeglądarki.");
+  }
 }
 function invRender() {
 
