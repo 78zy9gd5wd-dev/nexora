@@ -501,13 +501,9 @@ document.getElementById("inv-form").addEventListener("submit", event => {
 
   const units = Number(document.getElementById("inv-units").value);
 
-  if (!name || !Number.isFinite(units) || units <= 0 ||
+if (!name || !Number.isFinite(units) || units <= 0 ||
     !Number.isFinite(buy) || buy <= 0 ||
     !Number.isFinite(current) || current <= 0) {
-
-      !Number.isFinite(buy) || buy < 0 ||
-
-      !Number.isFinite(current) || current < 0) {
 
     alert("Sprawdź wpisane dane.");
 
