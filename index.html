@@ -270,32 +270,45 @@ document.getElementById(button.dataset.page).classList.add("active");
 });
 });
 
+
 function calculate(){
   const capital = Number(document.getElementById("capital").value);
   const risk = Number(document.getElementById("riskpct").value);
   const stop = Number(document.getElementById("stop").value);
+  const tp = Number(document.getElementById("takeprofit").value);
 
   const result = document.getElementById("result");
   const riskresult = document.getElementById("riskresult");
+  const profitresult = document.getElementById("profitresult");
+  const rrresult = document.getElementById("rrresult");
 
-  if(!Number.isFinite(capital) || !Number.isFinite(risk) || !Number.isFinite(stop) ||
-     capital <= 0 || risk <= 0 || risk > 100 || stop <= 0 || stop > 100){
+  if(![capital,risk,stop,tp].every(Number.isFinite) ||
+     capital<=0 || risk<=0 || risk>100 ||
+     stop<=0 || stop>100 || tp<=0 || tp>100){
     result.textContent = "Nieprawidłowe dane";
-    riskresult.textContent = "Kapitał musi być dodatni, a ryzyko i SL muszą wynosić od 0 do 100%.";
+    riskresult.textContent = "Sprawdź wszystkie wartości.";
+    profitresult.textContent = "Potencjalny zysk: —";
+    rrresult.textContent = "Stosunek R:R: —";
     return;
   }
 
-  const riskAmount = capital * risk / 100;
-  const position = riskAmount / (stop / 100);
+  const riskAmount = capital*risk/100;
+  const position = riskAmount/(stop/100);
+  const potentialProfit = position*(tp/100);
+  const rr = tp/stop;
 
-  result.textContent = position.toFixed(2) + " zł";
+  result.textContent = position.toFixed(2)+" zł";
+  riskresult.textContent = "Ryzyko: "+riskAmount.toFixed(2)+" zł.";
 
-  if(position > capital){
-    riskresult.textContent = "UWAGA: wymagana pozycja przekracza dostępny kapitał. Potrzebny kapitał: " + position.toFixed(2) + " zł. Bez dźwigni nie można otworzyć takiej pozycji.";
-  } else {
-    riskresult.textContent = "Ryzyko: " + riskAmount.toFixed(2) + " zł. Pozycja mieści się w dostępnym kapitale.";
+  profitresult.textContent = "Potencjalny zysk: "+potentialProfit.toFixed(2)+" zł";
+  rrresult.textContent = "Stosunek R:R: 1:"+rr.toFixed(2);
+
+  if(position>capital){
+    riskresult.textContent += " UWAGA: pozycja przekracza dostępny kapitał.";
   }
 }
+// NEXORA INVEST
+
 // NEXORA INVEST
 
 const invKey = "nexora_invest_assets_v1";
