@@ -265,20 +265,35 @@ button.classList.add("active");
 document.getElementById(button.dataset.page).classList.add("active");
 });
 });
+
 function calculate(){
-const capital=Number(document.getElementById("capital").value);
-const risk=Number(document.getElementById("riskpct").value);
-const stop=Number(document.getElementById("stop").value);
-if(capital<=0||risk<=0||stop<=0){
-document.getElementById("result").textContent="Sprawdź dane";
-document.getElementById("riskresult").textContent="Wartości muszą być większe od zera.";
-return;
+  const capital = Number(document.getElementById("capital").value);
+  const risk = Number(document.getElementById("riskpct").value);
+  const stop = Number(document.getElementById("stop").value);
+
+  const result = document.getElementById("result");
+  const riskresult = document.getElementById("riskresult");
+
+  if(!Number.isFinite(capital) || !Number.isFinite(risk) || !Number.isFinite(stop) ||
+     capital <= 0 || risk <= 0 || risk > 100 || stop <= 0 || stop > 100){
+    result.textContent = "Nieprawidłowe dane";
+    riskresult.textContent = "Kapitał musi być dodatni, a ryzyko i SL muszą wynosić od 0 do 100%.";
+    return;
+  }
+
+  const riskAmount = capital * risk / 100;
+  const position = riskAmount / (stop / 100);
+
+  result.textContent = position.toFixed(2) + " zł";
+
+  if(position > capital){
+    riskresult.textContent = "UWAGA: wymagana pozycja przekracza dostępny kapitał. Potrzebny kapitał: " + position.toFixed(2) + " zł. Bez dźwigni nie można otworzyć takiej pozycji.";
+  } else {
+    riskresult.textContent = "Ryzyko: " + riskAmount.toFixed(2) + " zł. Pozycja mieści się w dostępnym kapitale.";
+  }
 }
-const riskAmount=capital*risk/100;
-const position=riskAmount/(stop/100);
-document.getElementById("result").textContent=position.toFixed(2)+" zł";
-document.getElementById("riskresult").textContent="Potencjalna strata przy SL: "+riskAmount.toFixed(2)+" zł.";
-}// NEXORA INVEST
+// NEXORA INVEST
+
 const invKey = "nexora_invest_assets_v1";
 let inv = JSON.parse(localStorage.getItem(invKey) || "[]");
 
